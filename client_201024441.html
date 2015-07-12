@@ -1,0 +1,416 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>MySQL connect test</title>
+    <script type="text/javascript">
+		var serverUrl = "server_201024441.php";
+		var StudentFile = "Student.dat";
+		var ProfessorFile = "Professor.dat";
+		var LectureFile = "Lecture.dat";
+		var Student_Lecture_File = "Student_Lecture.dat";
+		var Professor_Lecture_File = "Professor_Lecture.dat";
+		var DepartmentFile = "Department.dat";
+				
+		function callBack(str) {
+			alert("call back : " + str);
+		}
+		
+        function sendQuery() {
+            xmlhttp=GetXmlHttpObject();
+            if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+            var url;// = "getQueryResult.php";
+            url = serverUrl + "?q=" + document.getElementById("queryValue").value;
+			
+            xmlhttp.onreadystatechange = stateChanged; // 서버의 처리상태에 따라 수행되는 콜백함수 등록
+            xmlhttp.open("GET", url, true); // open('method', 'url', async)의 형태로 작성
+            xmlhttp.send(null);             // 서버로 데이터를 전송한다. 
+        }
+
+        function stateChanged() {           // 서버의 처리상태 변화가 일어나는경우 수행되는 콜백함수
+            if (xmlhttp.readyState == 4) {  // 서버의 처리가 끝난경우
+                document.getElementById("txtQueryResult").innerHTML = xmlhttp.responseText;
+            }
+        }
+
+        function GetXmlHttpObject() {
+            if (window.XMLHttpRequest) {    // code for IE7+, Firefox, Chrome, Opera, Safari
+                return new XMLHttpRequest();
+            }
+            if (window.ActiveXObject) {     // code for IE6, IE5
+                return new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            return null;
+        }
+		
+		function initMySql() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//새 db 생성
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?m=" + "createDB";
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function delMySql() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			var url;
+			//구 db 제거
+			xmlhttp.onreadystatechange = stateChanged;
+			url = serverUrl + "?m=" + "deleteDB";
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function initStudent() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Student 초기화
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?m=" + "Student=" + StudentFile;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function delStudent() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Student 제거
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=" + "drop table Student";
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function initProfessor() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Professor 초기화
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?m=" + "Professor=" + ProfessorFile;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function delProfessor() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Professor 제거
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=" + "drop table Professor";
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function initLecture() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Lecture 초기화
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?m=" + "Lecture=" + LectureFile;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function delLecture() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Lecture 제거
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=" + "drop table Lecture";
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function initSL() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Student_Lecture 초기화
+			xmlhttp.onreadystatechange = stateChanged;
+			url = serverUrl + "?m=" + "Student_Lecture=" + Student_Lecture_File;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function delSL() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Student_Lecture 제거
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=" + "drop table Student_Lecture";
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function initPL() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Professor_Lecture 초기화
+			xmlhttp.onreadystatechange = stateChanged;
+			url = serverUrl + "?m=" + "Professor_Lecture=" + Professor_Lecture_File;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function delPL() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Professor_Lecture 제거
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=" + "drop table Professor_Lecture";
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function initDepartment() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+
+			//Department 초기화
+			xmlhttp.onreadystatechange = stateChanged;
+			url = serverUrl + "?m=" + "Department=" + DepartmentFile;
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function delDepartment() {
+			xmlhttp = GetXmlHttpObject();
+			if (xmlhttp == null) {
+                alert("Your browser does not support AJAX!");
+                return;
+            }
+			
+			//Department 제거
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=" + "drop table Department";
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function problem1() {
+			xmlhttp=GetXmlHttpObject();
+			if(xmlhttp == null) {
+				alert("Your browser does not support AJAX!");
+				return;
+			}
+			var url = serverUrl + "?q=";
+		}
+		function problem2() {
+		xmlhttp=GetXmlHttpObject();
+			if(xmlhttp == null) {
+				alert("Your browser does not support AJAX!");
+				return;
+			}
+				
+			var row1 =	"select jt.name, count(jt.id) as cnt ";
+			var row2 =	"from (select p.name, s.id ";
+			var row3 =			"from Professor p, Professor_Lecture pl, Lecture l, Student_Lecture sl, Student s ";
+			var row4 =	"where p.id=pl.professorID AND pl.lectureID=l.id AND l.id=sl.lectureID AND sl.studentID=s.id) jt ";
+			var row5 =	"group by jt.name"
+		
+			//쿼리 전달
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=p2@" + row1 + row2 + row3 + row4 + row5;
+			alert(url);
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function problem3() {
+			if(xmlhttp == null) {
+				alert("Your browser does not support AJAX!");
+				return;
+			}
+			
+			var row1 =	"SELECT countedTable.department ";
+			var row2 =	"FROM ( ";
+			var row3 =		"SELECT p2.name, p2.department, count( pl.lectureID ) AS cnt ";
+			var row4 =		"FROM Professor p2, Professor_Lecture pl ";
+			var row5 =		"WHERE p2.id = pl.professorID ";
+			var row6 =		"GROUP BY p2.name ";
+			var row7 =		"HAVING cnt >=3 ";
+			var row8 =		")countedTable ";
+			var row9 =	"GROUP BY countedTable.department ";
+			var row10 =	"HAVING count( countedTable.name ) >=3 ";
+			
+			//쿼리 전달
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=p3@" + row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10;
+			alert(url);
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		function problem4() {
+			xmlhttp=GetXmlHttpObject();
+			if(xmlhttp == null) {
+				alert("Your browser does not support AJAX!");
+				return;
+			}
+			
+			var row1 = "SELECT jt.l_name, jt.s_name, jt.department, jt.year, max( jt.score ) AS score ";
+			var row2 = "FROM ( ";
+			var row3 =		"SELECT lecture.name AS l_name, student.name AS s_name, student.department, student.year, student.score ";
+			var row4 =		"FROM Lecture, Student_Lecture, Student ";
+			var row5 =		"WHERE Lecture.id = Student_Lecture.lectureID ";
+			var row6 =		"AND Student_Lecture.studentID = Student.id ";
+			var row7 = 	")jt ";
+			var row8 = "GROUP BY jt.l_name";
+						
+			//쿼리 전달
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=p4@" + row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8;
+			alert(url);
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+		
+		function problem5() {
+			xmlhttp=GetXmlHttpObject();
+			if(xmlhttp == null) {
+				alert("Your browser does not support AJAX!");
+				return;
+			}
+			
+			var row1 =	"SELECT jt2.department, jt2.name, max( jt2.cnt ) "
+			var row2 =	"FROM ( "
+			var row3 = 	"SELECT jt1.department, jt1.name, jt1.cnt "
+			var row4 =	"FROM ( "
+			var row5 =		"SELECT l.department, l.name, count( s.id ) AS cnt "
+			var row6 =		"FROM Lecture l, Student_Lecture sl, Student s "
+			var row7 =		"WHERE l.id = sl.lectureID "
+			var row8 =		"AND sl.studentID = s.id "
+			var row9 =		"GROUP BY l.department, l.name "
+			var row10 =		")jt1 "
+			var row11 =	")jt2 "
+			var row12 =	"GROUP BY jt2.department "
+			
+			//쿼리 전달
+			xmlhttp.onreadystatechange = stateChanged;
+			var url = serverUrl + "?q=p5@" + row1 + row2 + row3 + row4 + row5 + row6 + row7 + row8 + row9 + row10 + row11 + row12;
+			alert(url);
+			xmlhttp.open("GET", url, true);
+			xmlhttp.send(null);
+		}
+    </script>
+</head>
+
+<body>
+    Send a SQL<br />
+    <form method="post">
+        <input type="text" id="queryValue" name="queryValue" size="25" />
+        <input type="button" value="Send" onclick="sendQuery();"/>
+    </form>
+    <br />
+    <div id="txtQueryResult"><b>Query results will be listed here.</b></div>
+	<br />
+	
+	<form method="post">
+		<input type="button" value="init database" onclick="initMySql();"/>
+		<input type="button" value="del database" onclick="delMySql();"/>
+		<br/>
+		<input type="button" value="init Student" onclick="initStudent();"/>
+		<input type="button" value="del Student" onclick="delStudent();"/>
+		<br/>
+		<input type="button" value="init Professor" onclick="initProfessor();"/>
+		<input type="button" value="del Professor" onclick="delProfessor();"/>
+		<br/>
+		<input type="button" value="init Lecture" onclick="initLecture();"/>
+		<input type="button" value="del Lecture" onclick="delLecture();"/>
+		<br/>
+		<input type="button" value="init Student_Lecture" onclick="initSL();"/>
+		<input type="button" value="del Student_Lecture" onclick="delSL();"/>
+		<br/>
+		<input type="button" value="init Professor_Lecture" onclick="initPL();"/>
+		<input type="button" value="del Professor_Lecture" onclick="delPL();"/>
+		<br/>
+		<input type="button" value="init Department" onclick="initDepartment();"/>
+		<input type="button" value="del Department" onclick="delDepartment();"/>
+	</form>
+	<br />
+	1. 수강과목 입력 <br />
+	<form method="post">
+		<input type="text" id="inputLecture" name="inputLecture" size="25" />
+		<input type="button" value="enter" onclick="problem1();" /> 
+	</form>
+	<br />
+	<div id="reqestLectureResult"><b>수강 신청 결과</b></div>
+	<br />
+	2. 교수별 수강 인원
+	<form method="post">
+		<input type="button" value="compute" onclick="problem2();" />
+	</form><br/>
+	<br />
+	3. 3 개 이상의 과목을 강의하는 교수가 3명 이상인 학과
+	<form method="post">
+		<input type="button" value="compute" onclick="problem3();" />
+	</form><br/>
+	<br />
+	4. 각 과목별 수강학생 중의 최고 학점을 가진 학생
+	<form method="post">
+		<input type="button" value="compute" onclick="problem4();" />
+	</form><br/>
+	<br />
+	5. 각 과별로 개설된 과목 중에서 타과의 학생이 수강하는 인원이 가장 많은 학과
+	<form method="post">
+		<input type="button" value="compute" onclick="problem5();" />
+	<form><br/>
+	<br />
+
+</body>
+</html>
